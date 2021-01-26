@@ -215,6 +215,7 @@
      "p" '(:ignore t :which-key "Projectile")
      "p r" '(projectile-run-project :which-key "Run")
      "p t" '(projectile-test-project :which-key "Test")
+     "p f" '(projectile-find-file :which-key "Find File")
      "p s" '(projectile-grep :which-key "Search")))
 
 
