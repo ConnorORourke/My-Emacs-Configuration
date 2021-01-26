@@ -44,7 +44,7 @@
 (dolist (mode '(org-mode-hook
                 term-mode-hook
                 shell-mode-hook
-		treemacs-mode
+		treemacs-mode-hook
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
@@ -76,7 +76,7 @@
                             (bookmarks . 5)
                             (projects . 5)))
     (setq dashboard-banner-logo-title "Welcome Connor. Remember to smile more :)")
-    (setq dashboard-footer-messages '("PLEASE NOTE: Try your hardest, but remember to have fun. Nothing matters, but you might as well enjoy it nonetheless."))
+    (setq dashboard-footer-messages '("PLEASE NOTE: Try your hardest, but remember to have fun. Nothing matters, so no stress :)"))
     (setq dashboard-set-file-icons t)
     (setq dashboard-set-heading-icons t)
     (setq dashboard-startup-banner 'logo))
@@ -236,6 +236,14 @@
   :custom
   (lsp-ui-doc-position 'bottom))
 
+(use-package treemacs
+  :bind
+  (:map global-map
+	([f8] . treemacs)
+	("C-<f8>" . treemacs-select-window))
+  :config
+  (setq treemacs-is-never-other-window t))
+
 (use-package lsp-treemacs
   :after lsp)
 
@@ -278,20 +286,22 @@
   (web-mode-code-indent-offset 2)
   :config
   (setq web-mode-content-types-alist
-	'(("jsx" . "\\.js[x]?\\'"))))
+	'(("jsx" . "\\.js[x]?\\'")))
+  (setq create-lockfiles nil))
+
 
   (use-package prettier-js
     :config
     (setq prettier-js-args '(
                           "--trailing-comma" "es5"
-                          "--single-quote" "true"
+                          "--single-quote" "false"
                           "--print-width" "100"
                           ))
     (add-hook 'web-mode-hook 'prettier-js-mode))
 
 
 
-    ;;clojure mode
+ ;;clojure mode
 (use-package clojure-mode
   :ensure t
   :mode (("\\.clj\\'" . clojure-mode)
@@ -320,6 +330,9 @@
         nrepl-hide-special-buffers t            
         cider-overlays-use-font-lock t)         
   (cider-repl-toggle-pretty-printing))
+
+;;------------------------------- extras ---------------------------------------------
+
 ;;------------------------------- CUSTOM THINGS ---------------------------------------
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -329,16 +342,19 @@
  '(custom-safe-themes
    '("77113617a0642d74767295c4408e17da3bfd9aa80aaa2b4eeb34680f6172d71a" default))
  '(package-selected-packages
-   '(prettier-js prettier-js-mode web-mode dashboard expand-region smartparens lsp-ivy lsp-treemacs lsp-ui company-box company smex visual-fill-column org-bullets magit counsel-projectile hydra evil general helpful counsel ivy-rich which-key rainbow-delimiters swiper use-package ivy doom-themes doom-modeline command-log-mode)))
+   '(prettier-js prettier-js-mode web-mode dashboard expand-region smartparens lsp-ivy lsp-treemacs lsp-ui company-box company smex visual-fill-column org-bullets magit counsel-projectile hydra evil general helpful counsel ivy-rich which-key rainbow-delimiters swiper use-package ivy doom-themes doom-modeline command-log-mode))
+ '(safe-local-variable-values
+   '((git-commit-prefix . "[RACOON-1]")
+     (cljr-magic-requires)
+     (css-indent-offset . 2)
+     (cider-default-cljs-repl . cursive-compatible-figwheel-main)
+     (cider-clojure-cli-parameters . "-A:dev:server:client:nrepl -m nrepl.cmdline --middleware '[\"cider.nrepl/cider-middleware\"]'")
+     (eval cider-register-cljs-repl-type 'cursive-compatible-figwheel-main "(do (require 'cljs) (ns cljs) (start-figwheel!) (repl))")
+     (git-commit-prefix . "[KOI-1]"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
-
-
-
-
 
