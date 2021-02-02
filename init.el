@@ -144,8 +144,9 @@
 ;;managing projects
 (use-package projectile
   :diminish projectile-mode
-  :config (projectile-mode)
-  :custom ((projectile-completion-system 'ivy))
+  :config
+  (projectile-mode)
+  :custom (projectile-completion-system 'ivy)
   :bind-keymap
   ("C-c p" . projectile-command-map)
   :init
@@ -296,7 +297,8 @@
          ("\\.tsx\\'" . web-mode)
          ("\\.html\\'" . web-mode)
          ("\\.vue\\'" . web-mode)
-	 ("\\.json\\'" . web-mode))
+	 ("\\.json\\'" . web-mode)
+	 ("\\.css\\'" . web-mode))
   :hook (web-mode . lsp-deferred)
   :commands web-mode
   :custom
@@ -352,6 +354,7 @@
 
 ;;------------------------------- extras ---------------------------------------------
 (setq make-backup-files nil)
+
 ;;------------------------------- CUSTOM THINGS ---------------------------------------
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
