@@ -167,7 +167,6 @@
 
 ;;smart parens
 (use-package smartparens
-  :ensure t
   :config
   (smartparens-global-mode t)
   :bind
@@ -198,6 +197,7 @@
   ("C-." . er/expand-region)
   ("C-," . er/contract-region))
 
+;;general - for custom keybindings
 (use-package general
   :config
   (general-auto-unbind-keys t)
@@ -216,7 +216,25 @@
      "p r" '(projectile-run-project :which-key "Run")
      "p t" '(projectile-test-project :which-key "Test")
      "p f" '(projectile-find-file :which-key "Find File")
-     "p s" '(projectile-grep :which-key "Search")))
+     "p s" '(projectile-grep :which-key "Search")
+
+     "t" '(:ignore t :which-key "Treemacs")
+     "t t" '(treemacs-select-window :which-key "Open Treemacs")
+     "t d" '(treemacs-create-dir :which-key "Create Dir")
+     "t f" '(treemacs-create-file :which-key "Create File")
+     "t r" '(treemacs-rename :which-key "Rename")
+     "t k" '(treemacs-delete :which-key "Delete")
+     "t m" '(treemacs-move-file :which-key "Move")))
+
+;;drag-stuff - for moving lines/selected regions
+(use-package drag-stuff
+  :config
+  (drag-stuff-mode t)
+  (drag-stuff-global-mode 1)
+  :bind
+  ("M-n" . drag-stuff-down)
+  ("M-p" . drag-stuff-up))
+
 
 
 ;;------------------------------- LANGUAGES ----------------------------
@@ -333,7 +351,7 @@
   (cider-repl-toggle-pretty-printing))
 
 ;;------------------------------- extras ---------------------------------------------
-
+(setq make-backup-files nil)
 ;;------------------------------- CUSTOM THINGS ---------------------------------------
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -343,7 +361,7 @@
  '(custom-safe-themes
    '("77113617a0642d74767295c4408e17da3bfd9aa80aaa2b4eeb34680f6172d71a" default))
  '(package-selected-packages
-   '(prettier-js prettier-js-mode web-mode dashboard expand-region smartparens lsp-ivy lsp-treemacs lsp-ui company-box company smex visual-fill-column org-bullets magit counsel-projectile hydra evil general helpful counsel ivy-rich which-key rainbow-delimiters swiper use-package ivy doom-themes doom-modeline command-log-mode))
+   '(drag-stuff prettier-js prettier-js-mode web-mode dashboard expand-region smartparens lsp-ivy lsp-treemacs lsp-ui company-box company smex visual-fill-column org-bullets magit counsel-projectile hydra evil general helpful counsel ivy-rich which-key rainbow-delimiters swiper use-package ivy doom-themes doom-modeline command-log-mode))
  '(safe-local-variable-values
    '((git-commit-prefix . "[RACOON-1]")
      (cljr-magic-requires)

@@ -3,4 +3,10 @@ projectile-bookmarks.eld
 projectile.cache
 recentf
 recentf~
+init.el~
+.lsp-session-v1
+smex-items
 transient
+server
+auto-save-list
+.cache
