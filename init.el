@@ -168,8 +168,11 @@
 
 ;;smart parens
 (use-package smartparens
+  :ensure t
+  :delight
   :config
-  (smartparens-global-mode t)
+  (require 'smartparens-config)
+  (smartparens-global-strict-mode t)
   :bind
   (("C-M-f" . sp-forward-sexp)
    ("C-M-b" . sp-backward-sexp)
@@ -236,6 +239,24 @@
   ("M-n" . drag-stuff-down)
   ("M-p" . drag-stuff-up))
 
+;;auto completing
+(use-package company
+  :after lsp-mode
+  :hook (lsp-mode . company-mode)
+  :config (global-company-mode t)
+  :bind (:map company-active-map
+         ("<tab>" . company-complete-selection))
+        (:map lsp-mode-map
+              ("<tab>" . company-indent-or-complete-common))
+	
+	
+  :custom
+  (company-minimum-prefix-length 1)
+  (company-idle-delay 0.0))
+
+(use-package company-box
+  :hook (company-mode . company-box-mode))
+
 
 
 ;;------------------------------- LANGUAGES ----------------------------
@@ -274,24 +295,6 @@
 ;;  :hook (typescript-mode . lsp-deferred)
 ;;  :config
 ;;  (setq typescript-indent-level 2))
-
-;;auto completing
-(use-package company
-  :after lsp-mode
-  :hook (lsp-mode . company-mode)
-  :config (global-company-mode t)
-  :bind (:map company-active-map
-         ("<tab>" . company-complete-selection))
-        (:map lsp-mode-map
-              ("<tab>" . company-indent-or-complete-common))
-	
-	
-  :custom
-  (company-minimum-prefix-length 1)
-  (company-idle-delay 0.0))
-
-(use-package company-box
-  :hook (company-mode . company-box-mode))
 
 (use-package web-mode  :ensure t
   :mode (("\\.js\\'" . web-mode)
@@ -369,7 +372,8 @@
  '(package-selected-packages
    '(drag-stuff prettier-js prettier-js-mode web-mode dashboard expand-region smartparens lsp-ivy lsp-treemacs lsp-ui company-box company smex visual-fill-column org-bullets magit counsel-projectile hydra evil general helpful counsel ivy-rich which-key rainbow-delimiters swiper use-package ivy doom-themes doom-modeline command-log-mode))
  '(safe-local-variable-values
-   '((git-commit-prefix . "[RACOON-1]")
+   '((ca-cleanup-is-enabled . t)
+     (git-commit-prefix . "[RACOON-1]")
      (cljr-magic-requires)
      (css-indent-offset . 2)
      (cider-default-cljs-repl . cursive-compatible-figwheel-main)
