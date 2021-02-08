@@ -359,7 +359,11 @@
   (cider-repl-toggle-pretty-printing))
 
 ;;------------------------------- extras ---------------------------------------------
-(setq make-backup-files nil)
+(setq backup-directory-alist
+          `((".*" . ,temporary-file-directory)))
+    (setq auto-save-file-name-transforms
+          `((".*" ,temporary-file-directory t)))
+
 
 ;;------------------------------- CUSTOM THINGS ---------------------------------------
 (custom-set-variables
