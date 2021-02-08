@@ -159,7 +159,9 @@
   :init
   ;; NOTE: Can set this to where you keep your git repos
   (when (file-directory-p "C:/Users/conno/Documents/programming/projects")
-   (setq projectile-project-search-path '("C:/Users/conno/Documents/programming/projects")))
+    (setq projectile-project-search-path '("C:/Users/conno/Documents/programming/projects")))
+  (when (file-directory-p "~/dev")
+   (setq projectile-project-search-path '("~/dev")))
    (setq projectile-switch-project-action #'projectile-dired))
 
 ;;now when you use M-o when switching project etc.
@@ -216,6 +218,7 @@
      "p t" '(projectile-test-project :which-key "Test")
      "p f" '(projectile-find-file :which-key "Find File")
      "p s" '(projectile-grep :which-key "Search")
+     "p p" '(projectile-switch-project :which-key "Project switch")
 
      "t" '(:ignore t :which-key "Treemacs")
      "t t" '(treemacs-select-window :which-key "Open Treemacs")
