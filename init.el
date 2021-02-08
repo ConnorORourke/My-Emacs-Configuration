@@ -1,10 +1,8 @@
 ;;-------------------------- PACKAGE INITIALISE ------------------------
 (require 'package)
-
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")))
-
+			 ("org" . "https://orgmode.org/elpa/")
+			 ("elpa" . "https://elpa.gnu.org/packages/")))
 (package-initialize)
 (unless package-archive-contents
  (package-refresh-contents))
@@ -14,7 +12,6 @@
    (package-install 'use-package))
 
 (require 'use-package)
-(setq use-package-always-ensure t)
 
 ;;-------------------------- SETTINGS --------------------------------
 ;;inhibit landing page
@@ -34,8 +31,6 @@
 ;; Set up the visible bell for backspace
 (setq visible-bell t)
 
-;; Make ESC quit prompts
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 (column-number-mode)
 (global-display-line-numbers-mode t)
@@ -52,18 +47,22 @@
 ;;---------------------------- THEMES ---------------------------------
 ;;all the fonts
 ;;need to run all-the-icons-install-fonts
-(use-package all-the-icons)
+(use-package all-the-icons
+  :ensure t)
 
 ;;doom theme 
 (use-package doom-themes
+  :ensure t
   :config
   (load-theme 'doom-dracula t))
 
 ;;doom modeline
 (use-package doom-modeline
+  :ensure t
   :hook (after-init . doom-modeline-mode))
 
 (use-package rainbow-delimiters
+  :ensure t
   :hook (prog-mode . rainbow-delimiters-mode))
 
 
@@ -86,13 +85,16 @@
 ;;-------------------------- PACKAGES ----------------------------------
 
 ;;search history
-(use-package smex)
+(use-package smex
+  :ensure t)
 
 ;;search
-(use-package swiper)
+(use-package swiper
+  :ensure t)
 
 ;;enables use of counsel (which is used by ivy)
 (use-package counsel
+  :ensure t
   :bind (("M-x" . counsel-M-x)
          ("C-x b" . counsel-ibuffer)
          ("C-x C-f" . counsel-find-file)
@@ -101,6 +103,7 @@
 
 ;;similar to HELM (used for completion, searching etc)
 (use-package ivy
+  :ensure t
   :diminish
   :bind (("C-s" . swiper)
          :map ivy-minibuffer-map
@@ -120,6 +123,7 @@
 
 ;;which key bindings are available and what they map to
 (use-package which-key
+  :ensure t
   :init (which-key-mode)
   :diminish which-key-mode
   :config
@@ -127,11 +131,13 @@
 
 ;;gives extra info for desribing functions e.g. with M-
 (use-package ivy-rich
+  :ensure t
   :init
   (ivy-rich-mode 1))
 
 ;;better help functions
 (use-package helpful
+  :ensure t
   :custom
   (counsel-describe-function-function #'helpful-callable)
   (counsel-describe-variable-function #'helpful-variable)
@@ -143,6 +149,7 @@
 
 ;;managing projects
 (use-package projectile
+  :ensure t
   :diminish projectile-mode
   :config
   (projectile-mode)
@@ -151,18 +158,19 @@
   ("C-c p" . projectile-command-map)
   :init
   ;; NOTE: Can set this to where you keep your git repos
-  ;;(when (file-directory-p "~/Projects/Code")
-   ;; (setq projectile-project-search-path '("~/Projects/Code")))
-  ;;(setq projectile-switch-project-action #'projectile-dired))
-  )
+  (when (file-directory-p "C:/Users/conno/Documents/programming/projects")
+   (setq projectile-project-search-path '("C:/Users/conno/Documents/programming/projects")))
+   (setq projectile-switch-project-action #'projectile-dired))
 
 ;;now when you use M-o when switching project etc.
 ;;counsel-projectile-rg
 (use-package counsel-projectile
+  :ensure t
   :config (counsel-projectile-mode))
 
 ;;managing git
 (use-package magit
+  :ensure t
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
@@ -173,25 +181,11 @@
   :config
   (require 'smartparens-config)
   (smartparens-global-mode t)
+  :init
+  (smartparens-global-mode t)
   :bind
-  (("C-M-f" . sp-forward-sexp)
-   ("C-M-b" . sp-backward-sexp)
-   ("C-M-d" . sp-down-sexp)
-   ("C-M-a" . sp-backward-down-sexp)
-   ("C-M-e" . sp-up-sexp)
-   ("C-M-u" . sp-backward-up-sexp)
-   ("C-M-t" . sp-transpose-sexp)
-   ("C-M-n" . sp-next-sexp)
-   ("C-M-p" . sp-previous-sexp)
-   ("C-M-k" . sp-kill-sexp)
-   ("C-M-w" . sp-copy-sexp)
-   ("C-<right>" . sp-forward-slurp-sexp)
-   ("C-<left>" . sp-forward-barf-sexp)
-   ("C-]" . sp-select-next-thing-exchange)
-   ("C-<left_bracket>" . sp-select-previous-thing)
-   ("C-M-]" . sp-select-next-thing)
-   ("M-F" . sp-forward-symbol)
-   ("M-B" . sp-backward-symbol)))
+  ("C-<right>" . sp-forward-slurp-sexp)
+  ("C-<left>" . sp-forward-barf-sexp))
 
 
 ;;expand region - for expanding highlighted text
@@ -203,6 +197,7 @@
 
 ;;general - for custom keybindings
 (use-package general
+  :ensure t
   :config
   (general-auto-unbind-keys t)
     (general-define-key
@@ -232,6 +227,7 @@
 
 ;;drag-stuff - for moving lines/selected regions
 (use-package drag-stuff
+  :ensure t
   :config
   (drag-stuff-mode t)
   (drag-stuff-global-mode 1)
@@ -241,20 +237,20 @@
 
 ;;auto completing
 (use-package company
-  :after lsp-mode
-  :hook (lsp-mode . company-mode)
+  :ensure t
   :config (global-company-mode t)
-  :bind (:map company-active-map
-         ("<tab>" . company-complete-selection))
-        (:map lsp-mode-map
-              ("<tab>" . company-indent-or-complete-common))
-	
-	
+  :init (global-company-mode t)
+  :bind
+  (:map company-active-map
+        ("<tab>" . company-complete-selection))
   :custom
   (company-minimum-prefix-length 1)
-  (company-idle-delay 0.0))
+  (company-idle-delay 0.0)) 
+
+
 
 (use-package company-box
+  :ensure t
   :hook (company-mode . company-box-mode))
 
 
@@ -265,6 +261,7 @@
   (lsp-headerline-breadcrumb-mode))
 
 (use-package lsp-mode
+  :ensure t
   :commands (lsp lsp-deferred)
   :hook (lsp-mode . efs/lsp-mode-setup)
   :init
@@ -273,11 +270,13 @@
   (lsp-enable-which-key-integration t))
 
 (use-package lsp-ui
+  :ensure t
   :hook (lsp-mode . lsp-ui-mode)
   :custom
   (lsp-ui-doc-position 'bottom))
 
 (use-package treemacs
+  :ensure t
   :bind
   (:map global-map
 	([f8] . treemacs)
@@ -286,9 +285,11 @@
   (setq treemacs-is-never-other-window t))
 
 (use-package lsp-treemacs
+  :ensure t
   :after lsp)
 
-(use-package lsp-ivy)
+(use-package lsp-ivy
+  :ensure t)
 
 ;;(use-package typescript-mode
 ;;  :mode "\\.tsx?\\'"
@@ -296,7 +297,8 @@
 ;;  :config
 ;;  (setq typescript-indent-level 2))
 
-(use-package web-mode  :ensure t
+(use-package web-mode
+  :ensure t
   :mode (("\\.js\\'" . web-mode)
          ("\\.jsx\\'" . web-mode)
          ("\\.ts\\'" . web-mode)
@@ -317,7 +319,8 @@
   (setq create-lockfiles nil))
 
 
-  (use-package prettier-js
+(use-package prettier-js
+  :ensure t
     :config
     (setq prettier-js-args '(
                           "--trailing-comma" "es5"
@@ -337,7 +340,6 @@
 
 ;;add clojure refactoring 
 (use-package clj-refactor
-  :defer t
   :ensure t
   :diminish clj-refactor-mode
   :config (cljr-add-keybindings-with-prefix "C-c C-l"))
@@ -345,7 +347,6 @@
 
 (use-package cider
   :ensure t
-  :defer t
   :init (add-hook 'cider-mode-hook #'clj-refactor-mode)
   :diminish subword-mode
   :config
@@ -371,23 +372,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("77113617a0642d74767295c4408e17da3bfd9aa80aaa2b4eeb34680f6172d71a" default))
  '(package-selected-packages
-   '(drag-stuff prettier-js prettier-js-mode web-mode dashboard expand-region smartparens lsp-ivy lsp-treemacs lsp-ui company-box company smex visual-fill-column org-bullets magit counsel-projectile hydra evil general helpful counsel ivy-rich which-key rainbow-delimiters swiper use-package ivy doom-themes doom-modeline command-log-mode))
- '(safe-local-variable-values
-   '((ca-cleanup-is-enabled . t)
-     (git-commit-prefix . "[RACOON-1]")
-     (cljr-magic-requires)
-     (css-indent-offset . 2)
-     (cider-default-cljs-repl . cursive-compatible-figwheel-main)
-     (cider-clojure-cli-parameters . "-A:dev:server:client:nrepl -m nrepl.cmdline --middleware '[\"cider.nrepl/cider-middleware\"]'")
-     (eval cider-register-cljs-repl-type 'cursive-compatible-figwheel-main "(do (require 'cljs) (ns cljs) (start-figwheel!) (repl))")
-     (git-commit-prefix . "[KOI-1]"))))
+   '(prettier-js clj-refactor clojure-mode web-mode lsp-ivy lsp-treemacs treemacs lsp-ui lsp-mode company-box company drag-stuff general expand-region smartparens magit counsel-projectile projectile helpful ivy-rich which-key counsel swiper smex dashboard rainbow-delimiters doom-modeline doom-themes all-the-icons use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
