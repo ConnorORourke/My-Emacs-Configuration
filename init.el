@@ -158,10 +158,10 @@
   ("C-c p" . projectile-command-map)
   :init
   ;; NOTE: Can set this to where you keep your git repos
-  (when (file-directory-p "C:/Users/conno/Documents/programming/projects")
-    (setq projectile-project-search-path '("C:/Users/conno/Documents/programming/projects")))
-  (when (file-directory-p "~/dev")
-   (setq projectile-project-search-path '("~/dev")))
+  (when (file-directory-p "~/personal")
+    (setq projectile-project-search-path '("~/personal")))
+  (when (file-directory-p "~/work")
+   (setq projectile-project-search-path '("~/work")))
    (setq projectile-switch-project-action #'projectile-dired))
 
 ;;now when you use M-o when switching project etc.
