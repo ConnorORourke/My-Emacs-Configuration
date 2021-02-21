@@ -159,9 +159,9 @@
   :init
   ;; NOTE: Can set this to where you keep your git repos
   (when (file-directory-p "~/personal")
-    (setq projectile-project-search-path '("~/personal")))
+    (setq projectile-project-search-path '("~/personal/projects")))
   (when (file-directory-p "~/work")
-   (setq projectile-project-search-path '("~/work")))
+   (setq projectile-project-search-path '("~/work/projects")))
    (setq projectile-switch-project-action #'projectile-dired))
 
 ;;now when you use M-o when switching project etc.
